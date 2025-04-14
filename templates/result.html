@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Career Recommendation Results</title>
+    <style>
+        body {
+            background-color: #121212;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #e0e0e0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 40px;
+            margin: 0;
+        }
+
+        .container {
+            background: #1e1e1e;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.7);
+            width: 100%;
+            max-width: 700px;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #ffffff;
+            font-size: 2em;
+        }
+
+        h2 {
+            color: #ffffff;
+            margin-top: 20px;
+        }
+
+        .recommendation {
+            background: #2a2a2a;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            border-left: 4px solid #007acc;
+        }
+
+        .career-title {
+            font-size: 1.3em;
+            font-weight: bold;
+            color: #ffffff;
+            margin-bottom: 10px;
+        }
+
+        .confidence {
+            background: #333;
+            display: inline-block;
+            color: #fff;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            margin-bottom: 15px;
+        }
+
+        .confidence-high {
+            background: #28a745;
+        }
+
+        .confidence-medium {
+            background: #ffc107;
+            color: #212529;
+        }
+
+        .confidence-low {
+            background: #dc3545;
+        }
+
+        .explanation {
+            line-height: 1.6;
+            margin-top: 10px;
+            color: #cccccc;
+        }
+
+        .button-container {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .button-container a {
+            text-decoration: none;
+        }
+
+        .button-container button {
+            background: #007acc;
+            border: none;
+            color: white;
+            padding: 10px 30px;
+            font-size: 1em;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            margin: 0 10px;
+        }
+
+        .button-container button:hover {
+            background: #005fa3;
+        }
+
+        .error-message {
+            background: #472a2a;
+            color: #ff6b6b;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Your Career Recommendations</h1>
+        
+        {% if error %}
+        <div class="error-message">
+            {{ error }}
+        </div>
+        {% endif %}
+
+        {% if recommendations %}
+            <p>Based on your psychometric assessment, here are your top career matches:</p>
+            
+            {% for rec in recommendations %}
+            <div class="recommendation">
+                <div class="career-title">{{ rec.career }}</div>
+                
+                {% if rec.confidence >= 80 %}
+                    <div class="confidence confidence-high">{{ rec.confidence }}% Match</div>
+                {% elif rec.confidence >= 60 %}
+                    <div class="confidence confidence-medium">{{ rec.confidence }}% Match</div>
+                {% else %}
+                    <div class="confidence confidence-low">{{ rec.confidence }}% Match</div>
+                {% endif %}
+                
+                {% if rec.explanation %}
+                <div class="explanation">
+                    {{ rec.explanation|safe }}
+                </div>
+                {% endif %}
+            </div>
+            {% endfor %}
+        {% endif %}
+
+        <div class="button-container">
+            <a href="/quiz"><button type="button">Retake Quiz</button></a>
+            <a href="/"><button type="button">Back to Home</button></a>
+        </div>
+    </div>
+</body>
+</html>

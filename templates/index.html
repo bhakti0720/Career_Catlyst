@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Career Pathfinder - Find Your Perfect Career</title>
+  <style>
+    /* === Dark Theme Styling === */
+    :root {
+      --bg-primary: #121212;
+      --bg-secondary: #1e1e1e;
+      --bg-card: #2a2a2a;
+      --text-primary: #e0e0e0;
+      --text-secondary: #bbbbbb;
+      --accent: #007acc;
+      --accent-hover: #005fa3;
+      --border-radius: 10px;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background-color: var(--bg-primary);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: var(--text-primary);
+      line-height: 1.6;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    /* === Navigation === */
+    .navbar {
+      background-color: var(--bg-secondary);
+      padding: 20px 0;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    }
+
+    .navbar .container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo h1 {
+      font-size: 1.8rem;
+      color: #ffffff;
+    }
+
+    .logo span {
+      color: var(--accent);
+    }
+
+    .nav-links {
+      display: flex;
+      list-style: none;
+    }
+
+    .nav-links li {
+      margin-left: 30px;
+    }
+
+    .nav-links a {
+      color: var(--text-primary);
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+
+    .nav-links a:hover {
+      color: var(--accent);
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 10px 20px;
+      border-radius: 5px;
+      text-decoration: none;
+      transition: all 0.3s;
+      font-weight: 500;
+    }
+
+    .btn-primary {
+      background-color: var(--accent);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background-color: var(--accent-hover);
+    }
+
+    .btn-outline {
+      border: 2px solid var(--accent);
+      color: var(--accent);
+    }
+
+    .btn-outline:hover {
+      background-color: var(--accent);
+      color: white;
+    }
+
+    /* === Hero Section === */
+    .hero {
+      padding: 80px 0;
+    }
+
+    .hero .container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+    }
+
+    .hero-content {
+      width: 100%;
+      max-width: 550px;
+      margin-bottom: 30px;
+    }
+
+    .hero-content h1 {
+      font-size: 3rem;
+      line-height: 1.2;
+      margin-bottom: 20px;
+      color: #ffffff;
+    }
+
+    .hero-content p {
+      font-size: 1.1rem;
+      margin-bottom: 30px;
+      color: var(--text-secondary);
+    }
+
+    .hero-image {
+      max-width: 500px;
+      width: 100%;
+    }
+
+    .hero-image img {
+      width: 100%;
+      height: 50%%;
+    }
+
+    /* === Features Section === */
+    .features {
+      padding: 80px 0;
+      background-color: var(--bg-secondary);
+    }
+
+    .section-title {
+      text-align: center;
+      font-size: 2.2rem;
+      margin-bottom: 50px;
+      color: #ffffff;
+    }
+
+    .feature-cards {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 30px;
+    }
+
+    .feature-card {
+      background-color: var(--bg-card);
+      border-radius: var(--border-radius);
+      padding: 30px;
+      width: calc(33.333% - 20px);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+      transition: transform 0.3s;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-5px);
+    }
+
+    .feature-card h3 {
+      font-size: 1.4rem;
+      margin-bottom: 15px;
+      color: #ffffff;
+    }
+
+    .feature-card p {
+      color: var(--text-secondary);
+    }
+
+    /* === How It Works Section === */
+    .how-it-works {
+      padding: 80px 0;
+    }
+
+    .steps {
+      display: flex;
+      flex-direction: column;
+      gap: 40px;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .step {
+      display: flex;
+      align-items: flex-start;
+      gap: 30px;
+    }
+
+    .step-number {
+      background-color: var(--accent);
+      color: white;
+      font-size: 1.5rem;
+      font-weight: bold;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-shrink: 0;
+    }
+
+    .step-content h3 {
+      font-size: 1.4rem;
+      margin-bottom: 10px;
+      color: #ffffff;
+    }
+
+    .step-content p {
+      color: var(--text-secondary);
+    }
+
+    .cta-container {
+      text-align: center;
+      margin-top: 60px;
+    }
+
+    /* === Footer === */
+    .footer {
+      background-color: var(--bg-secondary);
+      padding: 60px 0 30px;
+    }
+
+    .footer-content {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      margin-bottom: 40px;
+    }
+
+    .footer-logo {
+      width: 30%;
+    }
+
+    .footer-logo h2 {
+      font-size: 1.8rem;
+      margin-bottom: 15px;
+      color: #ffffff;
+    }
+
+    .footer-logo span {
+      color: var(--accent);
+    }
+
+    .footer-logo p {
+      color: var(--text-secondary);
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 60px;
+    }
+
+    .link-column h3 {
+      font-size: 1.2rem;
+      margin-bottom: 20px;
+      color: #ffffff;
+    }
+
+    .link-column ul {
+      list-style: none;
+    }
+
+    .link-column li {
+      margin-bottom: 10px;
+    }
+
+    .link-column a {
+      color: var(--text-secondary);
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+
+    .link-column a:hover {
+      color: var(--accent);
+    }
+
+    .footer-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 30px;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .footer-social {
+      display: flex;
+      gap: 20px;
+    }
+
+    .footer-social a {
+      color: var(--text-secondary);
+      transition: color 0.3s;
+    }
+
+    .footer-social a:hover {
+      color: var(--accent);
+    }
+
+    /* === Responsive === */
+    @media (max-width: 992px) {
+      .feature-card {
+        width: calc(50% - 15px);
+      }
+
+      .hero .container {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .hero-content,
+      .hero-image {
+        width: 100%;
+      }
+
+      .hero-content {
+        margin-bottom: 40px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .footer-content {
+        flex-direction: column;
+        gap: 40px;
+      }
+
+      .footer-logo,
+      .footer-links {
+        width: 100%;
+      }
+
+      .footer-links {
+        gap: 30px;
+      }
+
+      .feature-card {
+        width: 100%;
+      }
+
+      .step {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+      }
+
+      .footer-bottom {
+        flex-direction: column;
+        gap: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Navigation -->
+  <nav class="navbar">
+    <div class="container">
+      <div class="logo">
+        <h1>Career<span>Catlyst</span></h1>
+      </div>
+      <ul class="nav-links">
+        <li><a href="#features">Features</a></li>
+        <li><a href="#how-it-works">How It Works</a></li>
+        <li><a href="/quiz" class="btn btn-outline">Take Quiz</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <header class="hero">
+    <div class="container">
+      <div class="hero-content">
+        <h1>Build confidence. Get the job.</h1>
+        <p>Explore careers and prepare for the job with our personalized psychometric assessment designed to match your strengths with the perfect career path.</p>
+        <a href="/quiz" class="btn btn-primary">Get Started →</a>
+        <a href="/bot" class="btn btn-primary">Chat with us!</a>
+      </div>
+      <div class="hero-image">
+        <img src="{{ url_for('static', filename='img/homepage_hero.svg') }}" alt="Career exploration illustration" />
+
+      </div>
+    </div>
+  </header>
+
+  <!-- Features -->
+  <section id="features" class="features">
+    <div class="container">
+      <h2 class="section-title">Why Choose Career Catlyst?</h2>
+      <div class="feature-cards">
+        <div class="feature-card">
+          <h3>Personalized Recommendations</h3>
+          <p>Our AI-powered assessment analyzes your unique strengths, preferences, and skills to suggest careers that truly align with who you are.</p>
+        </div>
+        <div class="feature-card">
+          <h3>Data-Driven Insights</h3>
+          <p>Get detailed explanations about why each career matches your profile, with personalized insights into your strengths and potential fit.</p>
+        </div>
+        <div class="feature-card">
+          <h3>Quick & Easy Assessment</h3>
+          <p>Complete our 20-question psychometric quiz in just 5 minutes and instantly receive your tailored career recommendations.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- How It Works -->
+  <section id="how-it-works" class="how-it-works">
+    <div class="container">
+      <h2 class="section-title">How It Works</h2>
+      <div class="steps">
+        <div class="step">
+          <div class="step-number">1</div>
+          <div class="step-content">
+            <h3>Take the Assessment</h3>
+            <p>Answer 20 simple questions about your preferences, working style, and interests.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-number">2</div>
+          <div class="step-content">
+            <h3>Get Your Results</h3>
+            <p>Our algorithm analyzes your responses and identifies your top career matches.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-number">3</div>
+          <div class="step-content">
+            <h3>Explore Opportunities</h3>
+            <p>Review detailed career insights and discover paths that align with your natural strengths.</p>
+          </div>
+        </div>
+      </div>
+      <div class="cta-container">
+        <a href="/quiz" class="btn btn-primary">Start Your Assessment</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-logo">
+          <h2>Career<span>Pathfinder</span></h2>
+          <p>Guiding you to your ideal career path through data-driven insights.</p>
+        </div>
+        <div class="footer-links">
+          <div class="link-column">
+            <h3>Explore</h3>
+            <ul>
+              <li><a href="#features">Features</a></li>
+              <li><a href="#how-it-works">How It Works</a></li>
+              <li><a href="/quiz">Take the Quiz</a></li>
+            </ul>
+          </div>
+          <div class="link-column">
+            <h3>Resources</h3>
+            <ul>
+              <li><a href="#">Career Blog</a></li>
+              <li><a href="#">Industry Insights</a></li>
+              <li><a href="#">Success Stories</a></li>
+            </ul>
+          </div>
+          <div class="link-column">
+            <h3>Connect</h3>
+            <ul>
+              <li><a href="#">Contact Us</a></li>
+              <li><a href="#">Support</a></li>
+              <li><a href="#">Feedback</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2025 CareerPathfinder. All rights reserved.</p>
+        <div class="footer-social">
+          <a href="#">LinkedIn</a>
+          <a href="#">Twitter</a>
+          <a href="#">Instagram</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>

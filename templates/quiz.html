@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Psychometric Career Recommendation</title>
+  <style>
+    body {
+      background-color: #121212;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: #e0e0e0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      padding: 40px;
+      margin: 0;
+    }
+
+    .container {
+      background: #1e1e1e;
+      padding: 40px;
+      border-radius: 10px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.7);
+      width: 100%;
+      max-width: 700px;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 30px;
+      font-size: 2em;
+      color: #ffffff;
+    }
+
+    .question {
+      display: none;
+      margin-bottom: 30px;
+    }
+
+    .question-count {
+      text-align: right;
+      font-size: 0.9em;
+      margin-bottom: 10px;
+      color: #bbbbbb;
+    }
+
+    .options label {
+      display: block;
+      margin: 10px 0;
+      padding: 10px;
+      background-color: #2a2a2a;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .options input[type="radio"] {
+      margin-right: 10px;
+    }
+
+    .options label:hover {
+      background-color: #333;
+    }
+
+    .navigation {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 30px;
+    }
+
+    button {
+      background: #007acc;
+      border: none;
+      color: white;
+      padding: 10px 30px;
+      font-size: 1em;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    button:hover {
+      background: #005fa3;
+    }
+
+    .progress-bar {
+      width: 100%;
+      background: #333;
+      border-radius: 10px;
+      overflow: hidden;
+      margin-bottom: 20px;
+      height: 8px;
+    }
+
+    .progress {
+      height: 100%;
+      background: #007acc;
+      width: 0%;
+      transition: width 0.3s ease;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Psychometric Career Recommendation</h1>
+    <form id="quizForm" method="POST" action="/predict">
+      <div class="progress-bar">
+        <div class="progress" id="progressBar"></div>
+      </div>
+
+      {% set labels = {
+        1: 'Strongly Disagree',
+        2: 'Disagree',
+        3: 'Neutral',
+        4: 'Agree',
+        5: 'Strongly Agree'
+    } %}
+    {% for i in range(20) %}
+      <div class="question" id="q{{ i }}">
+        <div class="question-count">Question {{ i+1 }} of 20</div>
+        <p><strong>Q{{ i+1 }}:</strong> {{ questions[i] }}</p>
+        <div class="options">
+          {% for j in range(1,6) %}
+            <label><input type="radio" name="Q{{ i+1 }}" value="{{ j }}"> {{ j }} - {{ labels[j] }}</label>
+          {% endfor %}
+        </div>
+      </div>
+    {% endfor %}
+    
+
+      <div class="navigation">
+        <button type="button" id="prevBtn">Previous</button>
+        <button type="button" id="nextBtn">Next</button>
+        <button type="submit" id="submitBtn" style="display: none;">Submit</button>
+      </div>
+    </form>
+  </div>
+
+  <script>
+    const totalQuestions = 20;
+    let currentQuestion = 0;
+    const questions = document.querySelectorAll(".question");
+    const prevBtn = document.getElementById("prevBtn");
+    const nextBtn = document.getElementById("nextBtn");
+    const submitBtn = document.getElementById("submitBtn");
+    const progressBar = document.getElementById("progressBar");
+
+    function updateProgress() {
+      const percent = ((currentQuestion + 1) / totalQuestions) * 100;
+      progressBar.style.width = percent + "%";
+    }
+
+    function showQuestion(index) {
+      questions.forEach((q, i) => {
+        q.style.display = i === index ? "block" : "none";
+      });
+      prevBtn.style.display = index > 0 ? "inline-block" : "none";
+      nextBtn.style.display = index < totalQuestions - 1 ? "inline-block" : "none";
+      submitBtn.style.display = index === totalQuestions - 1 ? "inline-block" : "none";
+      updateProgress();
+    }
+
+    function isAnswered(index) {
+      const radios = questions[index].querySelectorAll("input[type='radio']");
+      return Array.from(radios).some(r => r.checked);
+    }
+
+    function changeQuestion(delta) {
+      if (delta > 0 && !isAnswered(currentQuestion)) {
+        alert("Please answer the question before proceeding.");
+        return;
+      }
+
+      const nextIndex = currentQuestion + delta;
+      if (nextIndex >= 0 && nextIndex < totalQuestions) {
+        currentQuestion = nextIndex;
+        showQuestion(currentQuestion);
+      }
+    }
+
+    prevBtn.onclick = () => changeQuestion(-1);
+    nextBtn.onclick = () => changeQuestion(1);
+
+    // Show first question
+    showQuestion(currentQuestion);
+  </script>
+</body>
+</html>
